@@ -1,6 +1,11 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:quizmaker/services/database.dart';
+import 'package:random_string/random_string.dart';
 
 import '../widgets/widgets.dart';
+import 'AddQuistions.dart';
 
 class creatquiz extends StatefulWidget {
   const creatquiz({Key? key}) : super(key: key);
@@ -10,6 +15,33 @@ class creatquiz extends StatefulWidget {
 }
 
 class _creatquizState extends State<creatquiz> {
+  final _formKey = GlobalKey<FormState>();
+  late String imageUrl, quizName, quizDesc, quizId;
+  DatabaseService databaseService = new DatabaseService();
+  bool _isLoading = false;
+
+  createQuizOnline() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      quizId = randomAlphaNumeric(16);
+      Map<String, String> quizMap = {
+        "quizId": quizId,
+        "quizTitle": quizName,
+        "quizImage": imageUrl,
+      };
+
+      await databaseService.addQuizData(quizMap, quizId).then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => AddQuistions(quizId)));
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,55 +54,67 @@ class _creatquizState extends State<creatquiz> {
         brightness: Brightness.light,
       ),
       body: Form(
-        child : Container(
-        child: Column(
-          children: [
-            TextFormField(
-              validator: (val){ val!.isEmpty ? "Enter a correct quiz Image" : null ;},
-              decoration: InputDecoration(
-                  hintText: "Quiz Image"
-              ) ,
-              onChanged: (val){
-              },
-            ),
-            TextFormField(
-              validator: (val){ val!.isEmpty ? "Enter a correct Quiz Title" : null ;},
-              decoration: InputDecoration(
-                  hintText: "Quiz Title"
-              ) ,
-              onChanged: (val){
-              },
-            ),
-            TextFormField(
-              validator: (val){ val!.isEmpty ? "Enter a correct Quiz Description" : null ;},
-              decoration: InputDecoration(
-                  hintText: "Quiz Description"
-              ) ,
-              onChanged: (val){
-              },
-            ),
-            SizedBox(height: 200,),
-            GestureDetector(
-              onTap: ()  {
-                //create a quiz
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.fromLTRB(35, 0, 35, 0),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(30)),
-                child: Text(
-                  "Qreate Quiz",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+        key: _formKey,
+        child: _isLoading
+            ? Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : Container(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (val) {
+                        val!.isEmpty ? "Enter a correct quiz Image" : null;
+                      },
+                      decoration: InputDecoration(hintText: "Quiz Image URL"),
+                      onChanged: (val) {
+                        //TODO
+                        imageUrl = val;
+                      },
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    TextFormField(
+                      validator: (val) {
+                        val!.isEmpty ? "Enter a correct Quiz Title" : null;
+                      },
+                      decoration: InputDecoration(hintText: "Quiz Title"),
+                      onChanged: (val) {
+                        //TODO
+                        quizName = val;
+                      },
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    TextFormField(
+                      validator: (val) {
+                        val!.isEmpty
+                            ? "Enter a correct Quiz Description"
+                            : null;
+                      },
+                      decoration: InputDecoration(hintText: "Quiz Description"),
+                      onChanged: (val) {
+                        //TODO
+                        quizDesc = val;
+                      },
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                        onTap: () {
+                          //create quiz event
+                          createQuizOnline();
+                        },
+                        child: blueButton(context : context, name: "Create Quiz")),
+                    SizedBox(
+                      height: 60,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-        ),
       ),
     );
   }

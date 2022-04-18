@@ -5,7 +5,6 @@ import 'package:quizmaker/views/signup.dart';
 import 'firebase_options.dart'; // Generated file
 import 'package:http/http.dart' as http;
 
-
 // void main() {
 //   //WidgetsFlutterBinding.ensureInitialized();
 //   //await Firebase.initializeApp();
@@ -13,12 +12,12 @@ import 'package:http/http.dart' as http;
 //   runApp(const MyApp());
 // }
 
-
-Future<void> main()  async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -32,8 +31,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:  SignIn(),
+      home: SignIn(),
     );
   }
 }
-

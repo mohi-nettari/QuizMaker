@@ -13,26 +13,26 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
-  late String email,password;
+  late String email, password;
   AuthService authService = new AuthService();
   bool _isLoading = false;
 
   //sign in
   signIn() async {
-    if(_formKey.currentState!.validate()){
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
-       authService.signInEmailAndPAssword(email, password).then((val){
-        if (val != null){
+
+      authService.signInEmailAndPAssword(email, password).then((val) {
+        if (val != null) {
           setState(() {
             _isLoading = false;
           });
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => Home()));
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Home()));
         }
       });
-
     }
   }
 
@@ -47,97 +47,96 @@ class _SignInState extends State<SignIn> {
         brightness: Brightness.light,
       ),
       body:
-      //if its loading than show to the user the progress bar
-      _isLoading ? Container(
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ) :
-
-          //if its not loading
-      Form(
-        key: _formKey,
-        child : Container(
-          margin : EdgeInsets.fromLTRB(25, 0, 25, 0),
-          child: Column(
-            children: [
-              Spacer(),
-              TextFormField(
-                validator: (val){ val!.isEmpty ? "Enter a correct email" : null ;},
-                decoration: InputDecoration(
-                    hintText: "mail"
-                ) ,
-                onChanged: (val){
-                  email=val;
-                },
-              ),
-              SizedBox(height: 6,),
-
-              TextFormField(
-                obscureText: true,
-                validator: (val){ return val!.isEmpty ? "Enter a correct password" : null;},
-                decoration: InputDecoration(
-                    hintText: "Password"
-                ) ,
-                onChanged: (val){
-                  password=val;
-                },
-              ),
-              SizedBox(height: 14,),
-              GestureDetector(
-                onTap: (){
-                  signIn();
-                  },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.fromLTRB(35, 0, 35, 0),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Text(
-                    "Sign In",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+          //if its loading than show to the user the progress bar
+          _isLoading
+              ? Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
                   ),
-                ),
-              ),
-              SizedBox(height: 20,),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(
-                      builder: (context) => SignUp()
-                  ));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Don\'t have an account? ',
-                        style:
-                        TextStyle(color: Colors.black87, fontSize: 17)),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(
-                            builder: (context) => SignUp()));
-                      },
-                      child: Container(
-                        child: Text('Sign Up',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
-                                fontSize: 17)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 80,),
-            ],
-          ),
-        )
-        
-      ),
+                )
+              :
 
+              //if its not loading
+              Form(
+                  key: _formKey,
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                    child: Column(
+                      children: [
+                        Spacer(),
+                        TextFormField(
+                          validator: (val) {
+                            val!.isEmpty ? "Enter a correct email" : null;
+                          },
+                          decoration: InputDecoration(hintText: "mail"),
+                          onChanged: (val) {
+                            email = val;
+                          },
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        TextFormField(
+                          obscureText: true,
+                          validator: (val) {
+                            return val!.isEmpty
+                                ? "Enter a correct password"
+                                : null;
+                          },
+                          decoration: InputDecoration(hintText: "Password"),
+                          onChanged: (val) {
+                            password = val;
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            signIn();
+                          },
+                          child: blueButton(context: context, name: "Sign In"),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUp()));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Don\'t have an account? ',
+                                  style: TextStyle(
+                                      color: Colors.black87, fontSize: 17)),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUp()));
+                                },
+                                child: Container(
+                                  child: Text('Sign Up',
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                          fontSize: 17)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 80,
+                        ),
+                      ],
+                    ),
+                  )),
     );
   }
 }

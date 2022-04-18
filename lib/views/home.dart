@@ -23,20 +23,17 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         child: Column(
-          children: [
-
-          ],
-        ) ,
-      ) ,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add) ,
-      backgroundColor: Colors.blue,
-        onPressed: () {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context)=> creatquiz()));
-      },
+          children: [],
+        ),
       ),
-
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
+        onPressed: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => creatquiz()));
+        },
+      ),
     );
   }
 }
