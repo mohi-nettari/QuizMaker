@@ -20,6 +20,7 @@ class _creatquizState extends State<creatquiz> {
   DatabaseService databaseService = new DatabaseService();
   bool _isLoading = false;
 
+  //inserting quiz data to the database.
   createQuizOnline() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -63,6 +64,7 @@ class _creatquizState extends State<creatquiz> {
               )
             : Container(
                 child: Column(
+                  //creating a quiz's text fields.
                   children: [
                     TextFormField(
                       validator: (val) {
@@ -103,9 +105,10 @@ class _creatquizState extends State<creatquiz> {
                       },
                     ),
                     Spacer(),
+                    //inserting quiz data to database (button).
                     GestureDetector(
                         onTap: () {
-                          //create quiz event
+                          //create quiz button
                           createQuizOnline();
                         },
                         child: blueButton(context : context, name: "Create Quiz")),

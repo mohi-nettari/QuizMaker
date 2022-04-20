@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
+
+  //insert quiz data to database
   Future<void> addQuizData(Map quizData, String quizId) async {
     await FirebaseFirestore.instance
         .collection("Quiz")
@@ -11,6 +13,7 @@ class DatabaseService {
     });
   }
 
+  //insert questions data to database.
   Future<void> addQestionData(Map questionData, String quizId) async {
     await FirebaseFirestore.instance
         .collection("Quiz")

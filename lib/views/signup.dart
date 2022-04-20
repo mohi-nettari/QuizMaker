@@ -1,9 +1,11 @@
 //import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:quizmaker/services/auth.dart';
+import 'package:quizmaker/views/home.dart';
 import 'package:quizmaker/views/signin.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:quizmaker/services/auth.dart';
+import '../helper/functions.dart';
 import '../widgets/widgets.dart';
 //import 'package:http/http.dart' as http;
 //import 'package:universal_html/html.dart' as html;
@@ -30,8 +32,9 @@ class _SignUpState extends State<SignUp> {
           setState(() {
             _isLoading = false;
           });
+          HelperFunctions.saveUserLoggedInSharedPreference(isUserLoggedIn: true);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => SignIn()));
+              context, MaterialPageRoute(builder: (context) => Home()));
         }
       });
     }

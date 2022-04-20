@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quizmaker/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'create_quiz.dart';
 
@@ -9,7 +11,13 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+isLogin(){
+  if(FirebaseAuth.instance.currentUser == null){
 
+  }else{
+
+  }
+}
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
@@ -26,6 +34,7 @@ class _HomeState extends State<Home> {
           children: [],
         ),
       ),
+      //inserting a quiz button.
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
