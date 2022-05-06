@@ -1,6 +1,8 @@
 # quizmaker
 
 A new Flutter project.
+this app is a quiz app that allows the user to play a quiz!
+also the user (or the admin) of the app can add new questions.
 
 ## Getting Started
 
