@@ -83,7 +83,7 @@ class _QuizPlayState extends State<QuizPlay> {
 
   @override
   void dispose() {
-    infoStream = null;
+    infoStream == null;
     super.dispose();
   }
 
